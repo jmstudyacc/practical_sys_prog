@@ -1,5 +1,6 @@
 // in tokenizer.rs - providing code for the tokenizer functionality
 
+use crate::parsemaths::token::Token;
 use std::iter::Peekable;
 use std::str::Chars;
 
@@ -8,20 +9,6 @@ use std::str::Chars;
 data structure for the INPUT */
 pub struct Tokenizer<'a> {
     expr: Peekable<Chars<'a>>,
-}
-
-/* enum chosen as it can store multiple data types from a set of predefined variables
-data structure for the OUTPUT */
-pub enum Token {
-    Add,        // '+'
-    Subtract,   // '-'
-    Multiply,   // '*'
-    Divide,     // '/'
-    Caret,      // '^'
-    LeftParen,  // '('
-    RightParen, // ')'
-    Num(f64),   // '1.0'
-    EOF,        // ''
 }
 
 /*
@@ -42,6 +29,8 @@ impl<'a> Tokenizer<'a> {
     }
 }
 
+// Implements Iterator trait on the Tokenizer struct
+// Enables the use of the .peek() method to build the logic for the Tokenizer
 impl<'a> Iterator for Tokenizer<'a> {
     type Item = Token;
 
@@ -76,7 +65,7 @@ impl<'a> Iterator for Tokenizer<'a> {
             Some('^') => Some(Token::Caret),
             Some('(') => Some(Token::LeftParen),
             Some(')') => Some(Token::RightParen),
-            None => Some(Token::EOF),
+            None => Some(Token::EoF),
             _ => None,
         }
     }
