@@ -35,3 +35,24 @@ pub fn eval(expr: Node) -> Result<f64, Box<dyn error::Error>> {
         Caret(expr1, expr2) => Ok(eval(*expr1)?.powf(eval(*expr2)?)),
     }
 }
+
+// Unit tests
+mod tests {
+    use super::*;
+    #[test]
+    fn test_expr1() {
+        use crate::parsemaths::parser::Parser;
+
+        let ast = Parser::new("1+2-3").unwrap().parse().unwrap();
+        let value = eval(ast).unwrap();
+        assert_eq!(value, 0.0);
+    }
+    #[test]
+    fn test_expr2() {
+        use crate::parsemaths::parser::Parser;
+
+        let ast = Parser::new("3+2-1*5/4").unwrap().parse().unwrap();
+        let val = eval(ast).unwrap();
+        assert_eq!(val, 3.75);
+    }
+}
