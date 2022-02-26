@@ -19,13 +19,15 @@ fn main() {
     println!("You can calculate the value of expressions such as: 2*3+4(4-5)+2^3/4. ");
     println!("Allowed numbers: positive, negative and decimals. ");
     println!("Supported operations: Add, Subtract, Multiply, Divide, PowerOf(^). ");
+    println!("Type 'quit' to exit. ");
     println!("Enter your arithmetic expression below:");
     loop {
         let mut input = String::new();
         match io::stdin().read_line(&mut input) {
             Ok(_) => {
-                if input.contains('q') {
-                    println!("Thanks for using the Arithmetic Expression Evaluator!");
+                if input.to_lowercase().contains("quit") {
+                    println!("Thanks for using the Arithmetic Expression Evaluator! ");
+                    println!("Goodbye!");
                     break;
                 }
                 match evaluate(input) {
