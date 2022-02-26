@@ -218,3 +218,17 @@ impl std::convert::From<std::boxed::Box<dyn std::error::Error>> for ParseError {
         ParseError::UnableToParse("Unable to parse".into())
     }
 }
+
+// Unit Tests
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::parsemaths::ast::Node::{Add, Number};
+
+    #[test]
+    fn test_addition() {
+        let mut parser = Parser::new("1+2").unwrap();
+        let expected = Add(Box::new(Number(1.0)), Box::new(Number(2.0)));
+        assert_eq!(parser.parse().unwrap(), expected);
+    }
+}
